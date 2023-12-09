@@ -4,6 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import { fromZodError } from 'zod-validation-error';
 require('dotenv').config({path:'../.env'})
 import jwt from 'jsonwebtoken';
+import authUser from '../middleware/authuser';
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -14,9 +15,14 @@ const createUserSchema = z.object({
     password:string()
 })
 
+const loginUserSchema =z.object({
+    email:string().email("Wrong email format"),
+    password:string()
+})
+
 const JWT_SECRET:string|undefined= process.env.JWT_SECRET
 
-router.use('/createUser',async (req:Request,res:Response) =>{
+router.post('/createUser',async (req:Request,res:Response) =>{
     try {
         let success =false;
          const {name ,email,password} = req.body;
@@ -63,6 +69,44 @@ router.use('/createUser',async (req:Request,res:Response) =>{
     }finally{
         await prisma.$disconnect();
     }
+})
+
+router.post('/login',async (req:Request,res:Response)=>{
+
+try {
+    let success =false;
+
+    const{email,password} =req.body;
+
+    const validationData ={email,password}
+    
+    const validationResult = loginUserSchema.safeParse(validationData);
+
+    if(!validationResult.success){
+        res.status(403).send("Wrong data entered")
+    }
+
+    const loginUser = await prisma.user.findUnique({where:{email}});
+
+    if(loginUser && loginUser.password !== password){
+     return res.status(403).send("Wrong password");
+    }
+
+    const data ={user:{id:loginUser?.id}}
+    let token='';
+
+    if(typeof JWT_SECRET ==="string"){
+        token =jwt.sign(data,JWT_SECRET);
+        success = true;
+    }
+
+    return res.status(200).json({success,token});
+
+
+} catch (error) {
+    console.error("Internal server error :: "+error)
+
+}
 })
 
 module.exports =router
