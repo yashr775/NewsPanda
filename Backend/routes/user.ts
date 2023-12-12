@@ -31,7 +31,7 @@ router.post('/createUser',async (req:Request,res:Response) =>{
          const validationResult = createUserSchema.safeParse(signUpdata);
 
          if(!validationResult.success){
-            res.status(400).send(fromZodError(validationResult.error))
+            return res.status(400).send(fromZodError(validationResult.error))
          }
 
          const user =await prisma.user.findUnique({
