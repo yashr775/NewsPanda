@@ -2,7 +2,7 @@ const Signup = () => {
   return (
     <div className="flex items-center justify-center h-screen bg-slate-300">
       <form className="bg-white opacity-100 w-1/5 h-1/2 rounded-xl" action="">
-        <h1 className="from-neutral-950 text-2xl flex justify-center mt-5 font-bold underline">
+        <h1 className="from-neutral-950 text-2xl flex justify-center mt-5 mb-5 font-bold underline">
           REGISTER !
         </h1>
         <label className="m-5 pt-5 text-lg">Name :</label>
