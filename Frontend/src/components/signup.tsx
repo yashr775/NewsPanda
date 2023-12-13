@@ -69,6 +69,7 @@ const Signup = () => {
           name="name"
           value={formData.name}
           onChange={handleChange}
+          required
         />
         <label className="m-5 pt-5 text-lg">Email :</label>
         <input
@@ -77,6 +78,7 @@ const Signup = () => {
           name="email"
           value={formData.email}
           onChange={handleChange}
+          required
         />
         <label className="m-5 pt-5 text-lg">Password :</label>
         <input
@@ -85,6 +87,7 @@ const Signup = () => {
           name="password"
           value={formData.password}
           onChange={handleChange}
+          required
         />
         <button className="bg-blue-800 w-5/6 h-10 text-white ml-5 rounded-lg">
           SIGN UP

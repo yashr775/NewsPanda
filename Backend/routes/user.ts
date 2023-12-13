@@ -83,7 +83,7 @@ try {
     const validationResult = loginUserSchema.safeParse(validationData);
 
     if(!validationResult.success){
-        res.status(403).send("Wrong data entered")
+       return res.status(403).send(fromZodError(validationResult.error))
     }
 
     const loginUser = await prisma.user.findUnique({where:{email}});
@@ -93,7 +93,7 @@ try {
     }
 
     const data ={user:{id:loginUser?.id}}
-    let token='';
+    let token:string=' ';
 
     if(typeof JWT_SECRET ==="string"){
         token =jwt.sign(data,JWT_SECRET);
