@@ -93,7 +93,7 @@ try {
     }
 
     const data ={user:{id:loginUser?.id}}
-    let token:string=' ';
+    let token:string='';
 
     if(typeof JWT_SECRET ==="string"){
         token =jwt.sign(data,JWT_SECRET);

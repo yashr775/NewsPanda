@@ -1,3 +1,8 @@
+const handleSignout = () => {
+  localStorage.removeItem("auth-token");
+  window.location.href = "/";
+};
+
 const Navbar = () => {
   return (
     <nav className="bg-black  h-14 flex justify-between items-center">
@@ -12,7 +17,10 @@ const Navbar = () => {
         <li className="text-white">Sports</li>
         <li className="text-white">Technology</li>
       </ul>
-      <button className="text-white bg-blue-800 rounded-lg h-9 w-20 m-4 text-lg ">
+      <button
+        className="text-white bg-blue-800 rounded-lg h-9 w-20 m-4 text-lg "
+        onClick={handleSignout}
+      >
         Sign Out
       </button>
     </nav>

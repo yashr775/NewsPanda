@@ -36,7 +36,7 @@ const Signin = () => {
       });
 
       const data = await response.json();
-      console.log(data.success + " " + data.token);
+
       if (data.success === true) {
         localStorage.setItem("auth-token", data.token);
         window.location.href = "/news";
