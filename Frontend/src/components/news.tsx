@@ -6,7 +6,7 @@ interface Article {
   title: string;
   description: string | null;
   newsurl: string;
-  imageurl: string | null;
+  urlToImage: string | null;
   author: string | null;
   date: string;
   source: string;
@@ -39,13 +39,12 @@ const News = () => {
       {articles.map((article) => {
         return (
           <div className="mt-10 grid grid-cols-4 gap-4 h-1/4 flex-content-0 ">
-            <p className="z-10">{article.imageurl}</p>
             <Newsitem
               key={article.newsurl}
               newsurl={article.newsurl}
               title={article.title.slice(0, 45)}
               imageurl={
-                article.imageurl ? article.imageurl : "No image available"
+                article.urlToImage ? article.urlToImage : "No image available"
               }
               source={article.source}
               description={
