@@ -36,28 +36,30 @@ const News = () => {
   return (
     <div className="bg-gray-300 min-h-screen">
       <Navbar />
-      {articles.map((article) => {
-        return (
-          <div className="mt-10 grid grid-cols-4 gap-4 h-1/4 flex-content-0 ">
-            <Newsitem
-              key={article.newsurl}
-              newsurl={article.newsurl}
-              title={article.title.slice(0, 45)}
-              imageurl={
-                article.urlToImage ? article.urlToImage : "No image available"
-              }
-              source={article.source}
-              description={
-                article.description
-                  ? article.description.slice(0, 88)
-                  : "No description available"
-              }
-              date={article.date}
-              author={article.author}
-            />
-          </div>
-        );
-      })}
+      <div className="mt-10 flex flex-wrap">
+        {articles.map((article) => {
+          return (
+            <div className="w-1/4 p-2 h-auto">
+              <Newsitem
+                key={article.newsurl}
+                newsurl={article.newsurl}
+                title={article.title.slice(0, 45)}
+                imageurl={
+                  article.urlToImage ? article.urlToImage : "No image available"
+                }
+                source={article.source}
+                description={
+                  article.description
+                    ? article.description.slice(0, 88)
+                    : "No description available"
+                }
+                date={article.date}
+                author={article.author}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

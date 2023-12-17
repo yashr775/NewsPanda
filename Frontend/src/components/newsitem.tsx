@@ -14,8 +14,9 @@ const Newsitem = (props: Props) => {
   return (
     <div className="w-1/2  rounded-lg m-4 p-4 bg-white ">
       <div>
-        <h1 className="text-xl font-bold">{title}</h1>
-        <img src={imageurl} alt={title} />
+        <h1 className="text-xl font-bold pb-2">{title}</h1>
+        <img className="pb-2" src={imageurl} alt={title} />
+        <span className="pb-2">{description}</span>
       </div>
     </div>
   );
