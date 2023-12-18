@@ -2,14 +2,19 @@ import { useEffect, useState } from "react";
 import Navbar from "./navbar";
 import Newsitem from "./newsitem";
 
+interface Source {
+  id: string | null;
+  name: string;
+}
+
 interface Article {
   title: string;
   description: string | null;
-  newsurl: string;
+  url: string;
   urlToImage: string | null;
   author: string | null;
-  date: string;
-  source: string;
+  publishedAt: string;
+  source: Source;
 }
 
 const News = () => {
@@ -41,20 +46,20 @@ const News = () => {
           return (
             <div className="w-1/4 p-2 h-auto">
               <Newsitem
-                key={article.newsurl}
-                newsurl={article.newsurl}
+                key={article.url}
+                newsurl={article.url}
                 title={article.title.slice(0, 45)}
                 imageurl={
                   article.urlToImage ? article.urlToImage : "No image available"
                 }
-                source={article.source}
+                source={article.source.name}
                 description={
                   article.description
                     ? article.description.slice(0, 88)
                     : "No description available"
                 }
-                date={article.date}
-                author={article.author}
+                date={article.publishedAt}
+                author={article.author ? article.author : "Anonymous"}
               />
             </div>
           );
