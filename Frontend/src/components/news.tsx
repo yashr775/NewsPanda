@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Navbar from "./navbar";
 import Newsitem from "./newsitem";
+import { useRecoilValue } from "recoil";
+import { newsCategory } from "../atoms";
 
 interface Source {
   id: string | null;
@@ -20,9 +22,10 @@ interface Article {
 const News = () => {
   const hiddenkey = import.meta.env.VITE_API_KEY;
   const [articles, setArticles] = useState<Article[]>([]);
+  const category = useRecoilValue(newsCategory);
 
   const updateNews = async () => {
-    const url = `https://newsapi.org/v2/top-headlines?country=us&apikey=${hiddenkey}`;
+    const url = `https://newsapi.org/v2/top-headlines?country=in&category=${category}&apikey=${hiddenkey}`;
     const data = await fetch(url);
     const parsedData = await data.json();
 
@@ -32,10 +35,11 @@ const News = () => {
 
   useEffect(() => {
     updateNews();
-  }, []);
+  }, [category]);
 
   useEffect(() => {
     console.log(articles);
+    console.log(category);
   }, [articles]);
 
   return (
