@@ -29,28 +29,34 @@ const News = () => {
 
   const updateNews = async () => {
     const url = `https://newsapi.org/v2/top-headlines?country=in&category=${category}&apikey=${hiddenkey}&pagesize=8&page=${page}`;
-    const data = await fetch(url);
-    const parsedData = await data.json();
 
-    const tempArticles = parsedData.articles;
+    try {
+      const data = await fetch(url);
+      const parsedData = await data.json();
 
-    if (tempArticles.length === 0) {
-      setHasMore(false);
-    } else {
-      setArticles((prevArticles) => [...prevArticles, ...tempArticles]);
-      setPage((prevPage) => prevPage + 1);
+      const tempArticles = await parsedData.articles;
+
+      if (tempArticles.length > 0) {
+        setArticles((prevArticles) => [...prevArticles, ...tempArticles]);
+        setPage((prevPage) => prevPage + 1);
+      } else {
+        setHasMore(false);
+        console.log("No more articles.");
+      }
+
+      console.log(parsedData.totalResults);
+    } catch (error) {
+      console.error("Error fetching news:", error);
     }
-
-    console.log(parsedData.totalResults);
-    setArticles(tempArticles);
   };
 
   useEffect(() => {
+    setPage(1);
+    setArticles([]);
     updateNews();
   }, [category]);
 
   useEffect(() => {
-    console.log(articles);
     console.log(category);
   }, [articles]);
 
@@ -61,8 +67,8 @@ const News = () => {
         dataLength={articles.length}
         next={updateNews}
         hasMore={hasMore}
-        loader={<p>Loading...</p>}
         children={undefined}
+        loader={<p>Loading...</p>}
       ></InfiniteScroll>
       <div className="mt-10 flex flex-wrap">
         {articles.map((article) => {
