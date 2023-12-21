@@ -4,6 +4,7 @@ import Newsitem from "./newsitem";
 import { useRecoilValue } from "recoil";
 import { newsCategory } from "../atoms";
 import InfiniteScroll from "react-infinite-scroll-component";
+import LoadingBar from "react-top-loading-bar";
 
 interface Source {
   id: string | null;
@@ -26,10 +27,12 @@ const News = () => {
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   const category = useRecoilValue(newsCategory);
+  const [progress, setProgress] = useState(100);
 
   const updateNews = async () => {
+    setProgress(30);
     const url = `https://newsapi.org/v2/top-headlines?country=in&category=${category}&apikey=${hiddenkey}&pagesize=8&page=${page}`;
-
+    setProgress(60);
     try {
       const data = await fetch(url);
       const parsedData = await data.json();
@@ -43,7 +46,7 @@ const News = () => {
         setHasMore(false);
         console.log("No more articles.");
       }
-
+      setProgress(100);
       console.log(parsedData.totalResults);
     } catch (error) {
       console.error("Error fetching news:", error);
@@ -63,6 +66,7 @@ const News = () => {
   return (
     <div className="bg-gray-300 min-h-screen">
       <Navbar />
+      <LoadingBar height={3} color="#f11946" progress={progress} />
       <InfiniteScroll
         dataLength={articles.length}
         next={updateNews}
