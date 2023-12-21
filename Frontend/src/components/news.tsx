@@ -72,7 +72,15 @@ const News = () => {
         next={updateNews}
         hasMore={hasMore}
         children={undefined}
-        loader={<p>Loading...</p>}
+        loader={
+          progress != 100 ? (
+            <p className="flex justify-center items-center text-2xl">
+              Loading...
+            </p>
+          ) : (
+            ""
+          )
+        }
       ></InfiniteScroll>
       <div className="mt-10 flex flex-wrap">
         {articles.map((article) => {
