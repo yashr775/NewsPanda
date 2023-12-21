@@ -1,4 +1,12 @@
 const Home = () => {
+  const handleSignInClick = () => {
+    window.location.href = "/signin";
+  };
+
+  const handleSignUpClick = () => {
+    window.location.href = "/signup";
+  };
+
   return (
     <div className="relative">
       <img
@@ -11,10 +19,16 @@ const Home = () => {
           Stay Informed, Stay Connected
         </div>
         <div className="flex justify-center">
-          <button className="bg-blue-700 m-4 p-2 rounded-lg text-white">
+          <button
+            className="bg-blue-700 m-4 p-2 rounded-lg text-white"
+            onClick={handleSignInClick}
+          >
             Sign In
           </button>
-          <button className="bg-blue-700 m-4 p-2 rounded-lg text-white">
+          <button
+            className="bg-blue-700 m-4 p-2 rounded-lg text-white"
+            onClick={handleSignUpClick}
+          >
             Sign Up
           </button>
         </div>
